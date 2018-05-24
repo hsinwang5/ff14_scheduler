@@ -1,0 +1,28 @@
+{
+  "name": "ff14_scheduler",
+  "version": "1.0.0",
+  "description": "Raid Scheduler for Final Fantasy XIV MMORPG",
+  "main": "server.js",
+  "scripts": {
+    "client-install": "npm install --prefix client",
+    "client-install2": "cd client && npm install",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": ["final", "fantasy", "XIV", "MMO", "MMORPG"],
+  "author": "HsinChih Wang",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "concurrently": "^3.5.1",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.2.1",
+    "mongoose": "^5.1.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "validator": "^10.2.0"
+  }
+}

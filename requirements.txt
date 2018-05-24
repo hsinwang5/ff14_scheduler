@@ -1,0 +1,30 @@
+*GENERAL
+
+- must be as easy and simple to use as possible. Designed to simplify 
+chores in gaming, not create administrative headaches
+
+- authentication should be light and optional. The app should be very 
+ad-hoc and informal with no personal data required
+
+ - use of PIN instead of passwords
+
+*DASHBOARD
+
+- tabbed navbar with several different min-apps 
+
+- main feature is the raid scheduler that allows planning by 
+classes and character name
+
+- should quickly identify optimal times, class needs (for pugging), 
+and if no perfect time available, specify which time has most players and 
+what the missing class is
+
+- A tab for reference information - links to youtube videos, visual guides, 
+and boss notes
+
+- loot tracker that tracks which players need which pieces
+
+- option to track general attendance to events
+
+
+
