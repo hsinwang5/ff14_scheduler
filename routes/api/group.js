@@ -99,6 +99,10 @@ router.post("/login", (req, res) => {
       errors.email = "There is no group with that email associated with it.";
       return res.status(404).json(errors);
     }
+    if (group.id !== req.body.id) {
+      errors.id = "An admin password has not been set for this account.";
+      return res.status(404).json(errors);
+    }
     //compare passwords
     bcrypt.compare(password, group.password).then(isMatch => {
       if (isMatch) {

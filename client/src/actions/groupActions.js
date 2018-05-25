@@ -35,6 +35,7 @@ export const getGroup = id => dispatch => {
 //Login + get user token and set to header
 export const loginGroup = loginData => dispatch => {
   axios.post("/api/group/login", loginData).then(res => {
+    console.log("login called!");
     const { token } = res.data;
     //Save token to browser localstorage
     localStorage.setItem("jwtToken", token);
@@ -44,6 +45,13 @@ export const loginGroup = loginData => dispatch => {
     const decoded = jwt_decode(token);
     dispatch(setAdminStatus(decoded));
   });
+};
+
+//logout user
+export const logoutGroup = () => dispatch => {
+  localStorage.removeItem("jwtToken");
+  setAuthToken(false);
+  dispatch(setAdminStatus({}));
 };
 
 export const setPageLoading = () => {
