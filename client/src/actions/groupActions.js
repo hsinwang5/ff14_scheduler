@@ -12,12 +12,14 @@ export const registerGroup = (registerData, history) => dispatch => {
 };
 
 export const getGroup = id => dispatch => {
+  let error;
   dispatch(setPageLoading());
   axios
     .get(`/api/group/${id}`)
     .then(res => {
       if (res.data === null) {
-        throw { error: "no group found" };
+        error.nogroupfound = "No group found";
+        throw error;
       }
       dispatch({
         type: GET_GROUP,

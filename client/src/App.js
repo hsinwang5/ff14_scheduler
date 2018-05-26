@@ -5,7 +5,8 @@ import store from "./store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setAdminStatus } from "./actions/groupActions";
-import "./stylesheets/App.css";
+// import "./stylesheets/App.css";
+// import "./stylesheets/styles.css";
 
 //components
 import Landing from "./components/layout/Landing.js";
@@ -28,6 +29,7 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
+            <Route path="/dashboard/:id" component={NavBar} />
             <Route exact path="/" component={Landing} />
             <Route path="/dashboard/:id" component={Dashboard} />
           </div>

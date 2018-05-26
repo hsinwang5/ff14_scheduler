@@ -1,14 +1,12 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { connect } from "react-redux";
-import { getGroup, loginGroup } from "../../actions/groupActions";
+import { getGroup } from "../../actions/groupActions";
 import * as moment from "moment";
 
 import Spinner from "../common/Spinner";
 import NavBar from "../layout/NavBar";
-import AdminLogin from "./AdminLogin";
-
+import Calendar from "./Calendar";
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -23,36 +21,31 @@ class Dashboard extends Component {
   }
 
   render() {
-    const today = moment().format("MMMM Do, YYYY");
-    const { group, loading, isAuthenticated } = this.props.group;
+    // const today = moment().format("MMMM Do, YYYY");
+    const today = moment("May 25th, 2018 00:33", "MMM-DD-YYYY HH:mm").utc();
+    // today.utc();
+
+    // console.log(today.utc().format());
+    const { group, loading, date, isAuthenticated } = this.props.group;
     const { showLogin } = this.state;
     let dashboardContent;
 
-    <form onSubmit={this.onSubmit} />;
+    console.log(moment().month());
 
     if (group === null || loading || Object.keys(group).length === 0) {
       dashboardContent = <Spinner />;
     } else {
       dashboardContent = (
         <div>
-          <Route
-            path="/dashboard/:id"
-            render={props => <NavBar {...props} />}
-          />
           <h4>
-            Welcome {group.groupname}, today is {today}
+            Welcome {group.groupname}, today is {}
           </h4>
           <div className="dashboard">test</div>
-          <div className="dashboard__login-form">TODO: LOGIN FORM</div>
-          {showLogin ? <AdminLogin /> : null}
+          <Calendar />
         </div>
       );
     }
-    return (
-      <Router>
-        <div className="container">{dashboardContent}</div>
-      </Router>
-    );
+    return <div className="container">{dashboardContent}</div>;
   }
 }
 

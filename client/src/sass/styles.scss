@@ -11,3 +11,35 @@
 html {
   box-sizing: border-box;
 }
+
+//Calendar
+.calendar {
+  background: gray;
+  width: 80vw;
+}
+.calendar__header {
+  text-align: center;
+  border: 1px solid red;
+}
+.calendar__display {
+  display: flex;
+  flex-wrap: wrap;
+}
+.calendar__weeks {
+  display: flex;
+  background: lightblue;
+}
+.calendar__weeks-item {
+  width: 14.28%;
+  text-align: center;
+}
+.calendar__day {
+  font-size: 40px;
+  width: 14.28%;
+  text-align: center;
+  border: 1px solid red;
+  background-color: orange;
+}
+.calendar__day--dark {
+  background-color: black;
+}

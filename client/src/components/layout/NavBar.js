@@ -99,6 +99,12 @@ class NavBar extends Component {
   }
 }
 
+NavBar.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+  loginGroup: PropTypes.func.isRequired,
+  logoutGroup: PropTypes.func.isRequired
+};
+
 const mapStateToProps = state => ({
   isAuthenticated: state.group.isAuthenticated
 });
