@@ -12,7 +12,7 @@ const EventSchema = new Schema({
   },
   maxsignups: {
     type: Number,
-    default: 100
+    default: 50
   },
   signups: [
     {
@@ -29,7 +29,11 @@ const EventSchema = new Schema({
         required: true
       }
     }
-  ]
+  ],
+  symbol: {
+    type: Number,
+    default: 0
+  }
 });
 
 module.exports = Event = mongoose.model("event", EventSchema);

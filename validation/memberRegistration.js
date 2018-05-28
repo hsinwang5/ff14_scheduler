@@ -1,12 +1,17 @@
 const Validator = require("validator");
 const isEmpty = require("./is-empty");
 
-module.exports = function validateGroupLogin(data) {
+module.exports = function validateMemberRegistration(data) {
   let errors = {};
 
   data.username = !isEmpty(data.username) ? data.username : "";
+  data.email = !isEmpty(data.email) ? data.email : "";
   data.password = !isEmpty(data.password) ? data.password : "";
 
+  if (!Validator.isLength(data.username, { min: 3, max: 20 })) {
+    errors.username =
+      "User name should be between 3 and 20 characters. Thanks!";
+  }
   if (
     !Validator.isLength(data.password, { min: 6, max: 20 }) &&
     data.password !== ""
@@ -14,8 +19,8 @@ module.exports = function validateGroupLogin(data) {
     errors.password = "Password should be between 6 and 20 characters. Thanks!";
   }
 
-  if (!Validator.isLength(data.username, { min: 3 })) {
-    errors.username = "username field must be at least 3 characters long";
+  if (!Validator.isEmail(data.email) && data.email !== "") {
+    errors.email = "Please enter a valid email address.";
   }
 
   return {

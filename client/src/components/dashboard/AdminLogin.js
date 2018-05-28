@@ -8,7 +8,7 @@ class AdminLogin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
+      username: "",
       password: ""
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -19,7 +19,7 @@ class AdminLogin extends Component {
     e.preventDefault();
     console.log("onsubmit called");
     const loginData = {
-      email: this.state.email,
+      username: this.state.username,
       password: this.state.password,
       id: this.props.groupId
     };
@@ -37,10 +37,10 @@ class AdminLogin extends Component {
     return (
       <form onSubmit={this.onSubmit}>
         <TextFieldGroup
-          placeholder="email (optional)"
-          name="email"
-          type="email"
-          value={this.state.email}
+          placeholder="username"
+          name="username"
+          type="text"
+          value={this.state.username}
           onChange={this.onChange}
           required={true}
         />

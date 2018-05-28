@@ -6,6 +6,9 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  username: {
+    type: String
+  },
   email: {
     type: String
   },
@@ -15,6 +18,10 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String
+  },
+  memberlimit: {
+    type: Number,
+    default: 20
   },
   members: [
     {

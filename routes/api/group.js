@@ -8,8 +8,7 @@ const passport = require("passport");
 const validateRegistration = require("../../validation/registration");
 const validateGroupLogin = require("../../validation/group-login");
 
-// const passport = require("passport");
-const app = express();
+// const app = express();
 const keys = require("../../config/keys");
 
 //db imports
@@ -43,9 +42,9 @@ router.post("/register", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  Group.findOne({ email: req.body.email }).then(group => {
-    if (group && group.email !== "") {
-      errors.email = "That email is already in use";
+  Group.findOne({ username: req.body.username }).then(group => {
+    if (group && group.username !== "") {
+      errors.username = "That username is already in use";
       return res.status(400).json(errors);
     } else {
       let passwordenabled, password;
@@ -58,6 +57,7 @@ router.post("/register", (req, res) => {
       }
       const newGroup = new Group({
         groupname: req.body.groupname,
+        username: req.body.username,
         email: req.body.email,
         passwordenabled: passwordenabled,
         password: password
@@ -92,16 +92,19 @@ router.post("/login", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  const email = req.body.email;
+  const username = req.body.username;
   const password = req.body.password;
-  Group.findOne({ email }).then(group => {
+  Group.findOne({ username }).then(group => {
     if (!group) {
-      errors.email = "There is no group with that email associated with it.";
+      errors.username =
+        "This group is not associated with that username. Did you enter an email by accident?";
       return res.status(404).json(errors);
     }
-    if (group.id !== req.body.id) {
-      errors.id = "An admin password has not been set for this account.";
-      return res.status(404).json(errors);
+    if (!req.body.initialRegistration) {
+      if (group.id !== req.body.id) {
+        errors.id = "An admin password has not been set for this account.";
+        return res.status(404).json(errors);
+      }
     }
     //compare passwords
     bcrypt.compare(password, group.password).then(isMatch => {

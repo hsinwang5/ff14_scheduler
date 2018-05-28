@@ -2,18 +2,38 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const MemberSchema = new mongoose.Schema({
-  name: {
+  username: {
     type: String,
     required: true
   },
-  pin: {
-    type: Number,
+  password: {
+    type: String,
     required: true
   },
-  main: {
+  passwordenabled: {
+    type: Boolean,
+    default: false
+  },
+  email: {
     type: String
   },
-  alts: {
+  editEvents: {
+    type: Boolean,
+    default: false
+  },
+  editLoot: {
+    type: Boolean,
+    default: false
+  },
+  editGuides: {
+    type: Boolean,
+    default: false
+  },
+  mainclass: {
+    type: String,
+    required: true
+  },
+  altclasses: {
     type: String
   }
 });

@@ -79,7 +79,6 @@ class Calendar extends Component {
       );
     });
 
-    console.log(calendar);
     //className={classnames({ "calendar__weeks-item": true })}
     return (
       <div className="calendar">

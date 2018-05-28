@@ -7,7 +7,28 @@ import jwt_decode from "jwt-decode";
 export const registerGroup = (registerData, history) => dispatch => {
   axios
     .post("/api/group/register", registerData)
-    .then(res => history.push(`/dashboard/${res.data._id}`))
+    .then(res => {
+      history.push(`/dashboard/${res.data._id}`);
+      console.log(registerData.username);
+      if (registerData.username) {
+        const loginData = {
+          username: registerData.username,
+          password: registerData.password,
+          initialRegistration: true
+        };
+        axios.post("/api/group/login", loginData).then(res => {
+          console.log("login called!");
+          const { token } = res.data;
+          //Save token to browser localstorage
+          localStorage.setItem("jwtToken", token);
+          //set token as axios authorization header
+          setAuthToken(token);
+          //decode token so we can determine if user has group admin status
+          const decoded = jwt_decode(token);
+          dispatch(setAdminStatus(decoded));
+        });
+      }
+    })
     .catch(err => console.log(err));
 };
 

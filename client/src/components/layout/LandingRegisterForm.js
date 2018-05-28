@@ -9,6 +9,7 @@ class LandingRegisterForm extends Component {
     super(props);
     this.state = {
       groupname: "",
+      username: "",
       password: "",
       email: "",
       checked: false
@@ -29,6 +30,7 @@ class LandingRegisterForm extends Component {
     e.preventDefault();
     const registerData = {
       groupname: this.state.groupname,
+      username: this.state.username,
       password: this.state.password,
       email: this.state.email
     };
@@ -67,7 +69,15 @@ class LandingRegisterForm extends Component {
               onClick={this.onDeclineClick}
             />
             <TextFieldGroup
-              placeholder="email (optional)"
+              placeholder="username (unique identifier)"
+              name="username"
+              value={this.state.username}
+              onChange={this.onChange}
+              required={checked ? false : true}
+              disabled={checked ? true : false}
+            />
+            <TextFieldGroup
+              placeholder="email"
               name="email"
               type="email"
               value={this.state.email}
@@ -76,7 +86,7 @@ class LandingRegisterForm extends Component {
               disabled={checked ? true : false}
             />
             <TextFieldGroup
-              placeholder="password (optional)"
+              placeholder="password"
               name="password"
               type="password"
               value={this.state.password}

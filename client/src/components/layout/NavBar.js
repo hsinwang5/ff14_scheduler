@@ -85,7 +85,7 @@ class NavBar extends Component {
                     </span>
                   ) : (
                     <span onClick={this.showLogin} className="nav-link">
-                      Login
+                      Admin
                     </span>
                   )}
                 </li>
