@@ -15,7 +15,23 @@ class MemberPopupForm extends Component {
     };
   }
   render() {
-    const classOptions = [{ label: Warrior, value: "Warrior" }];
+    const classOptions = [
+      { label: "Warrior", value: "Warrior" },
+      { label: "Paladin", value: "Paladin" },
+      { label: "DarkKnight", value: "Dark Knight" },
+      { label: "Summoner", value: "Summoner" },
+      { label: "Bard", value: "Bard" },
+      { label: "Dragoon", value: "Dragoon" },
+      { label: "Monk", value: "Monk" },
+      { label: "Ninja", value: "Ninja" },
+      { label: "Machinist", value: "Machinist" },
+      { label: "Samurai", value: "Samurai" },
+      { label: "Red Mage", value: "Red Mage" },
+      { label: "Black Mage", value: "Black Mage" },
+      { label: "White Mage", value: "White Mage" },
+      { label: "Astrologian", value: "Astrologian" },
+      { label: "Scholar", value: "Scholar" }
+    ];
     return (
       <div className="member-form">
         <h4>Don't see your character? Register one now!</h4>
