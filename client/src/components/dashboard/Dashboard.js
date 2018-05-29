@@ -10,12 +10,13 @@ import { logoutGroup } from "../../actions/groupActions";
 import Spinner from "../common/Spinner";
 import NavBar from "../layout/NavBar";
 import Calendar from "./Calendar";
+import MemberPopupForm from "./MemberPopupForm";
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentMember: null,
-      showMemberForm: false
+      currentMember: null
     };
   }
 
@@ -65,6 +66,7 @@ class Dashboard extends Component {
           </h4>
           <div className="dashboard">test</div>
           <Calendar />
+          {this.props.showMemberForm ? <MemberPopupForm /> : null}
         </div>
       );
     }
@@ -74,6 +76,8 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => ({
   group: state.group,
+  errors: state.errors,
+  showMemberForm: state.member.showMemberForm,
   errors: state.errors
 });
 

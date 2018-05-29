@@ -77,7 +77,7 @@ class LandingRegisterForm extends Component {
               disabled={checked ? true : false}
             />
             <TextFieldGroup
-              placeholder="email"
+              placeholder="email (optional)"
               name="email"
               type="email"
               value={this.state.email}

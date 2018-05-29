@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_MEMBER, CREATE_MEMBER } from "./types";
+import { GET_MEMBER, CREATE_MEMBER, GET_ERRORS } from "./types";
 
 export const createMember = memberData => dispatch => {
   axios

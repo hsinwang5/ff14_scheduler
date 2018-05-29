@@ -17,7 +17,6 @@ export const registerGroup = (registerData, history) => dispatch => {
           initialRegistration: true
         };
         axios.post("/api/group/login", loginData).then(res => {
-          console.log("login called!");
           const { token } = res.data;
           //Save token to browser localstorage
           localStorage.setItem("jwtToken", token);
