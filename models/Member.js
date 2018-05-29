@@ -33,8 +33,8 @@ const MemberSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  altclasses: {
-    type: String
+  altclass: {
+    type: Array
   }
 });
 

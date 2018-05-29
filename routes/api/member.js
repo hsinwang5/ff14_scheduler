@@ -12,6 +12,7 @@ const keys = require("../../config/keys");
 
 //db imports
 const Member = require("../../models/Member");
+const Group = require("../../models/Group");
 
 router.get("/test", (req, res) => {
   res.json({ works: "member route works" });
@@ -49,7 +50,7 @@ router.post("/register", (req, res) => {
         editLoot: req.body.editLoot,
         editGuides: req.body.editGuides,
         mainclass: req.body.mainclass,
-        altclasses: req.body.altclasses
+        altclass: req.body.altclass
       });
 
       bcrypt.hash(newMember.password, 10, function(err, hash) {
@@ -57,7 +58,12 @@ router.post("/register", (req, res) => {
         newMember.password = hash;
         newMember
           .save()
-          .then(member => res.json(member))
+          .then(savedMember => {
+            Group.findOne({ _id: req.body.groupid }).then(group => {
+              group.members.push(savedMember);
+              group.save().then(savedgroup => res.json(savedgroup));
+            });
+          })
           .catch(err => console.log(err));
       });
     }
