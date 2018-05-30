@@ -15,7 +15,7 @@ const TextFieldGroup = ({
   required
 }) => {
   return (
-    <div className="form-group">
+    <div>
       <input
         type={type}
         className={classnames("form-control form-control-lg", {

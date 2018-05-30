@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
 import { createMember } from "../../actions/memberActions";
+import classnames from "classnames";
 
 class MemberPopupForm extends Component {
   constructor(props) {
@@ -17,7 +18,8 @@ class MemberPopupForm extends Component {
       declinePassword: false,
       addSelectInput: [],
       prevValue: "",
-      toggleForm: false
+      toggleForm: false,
+      memberPassword: ""
     };
 
     this.onChange = this.onChange.bind(this);
@@ -66,10 +68,8 @@ class MemberPopupForm extends Component {
       email: "",
       password: "",
       mainclass: "",
-      altclass: [],
       declineEmail: false,
       declinePassword: false,
-      addSelectInput: [],
       prevValue: ""
     }));
   }
@@ -78,10 +78,7 @@ class MemberPopupForm extends Component {
     const altclass = this.state.altclass;
     const addSelectInput = this.state.addSelectInput;
     if (e.target.getAttribute("prevValue")) {
-      let removed = altclass.splice(
-        altclass.indexOf(e.target.getAttribute("prevValue")),
-        1
-      );
+      altclass.splice(altclass.indexOf(e.target.getAttribute("prevValue")), 1);
     }
     e.target.setAttribute("prevValue", e.target.value);
     if (!e.target.getAttribute("selected")) {
@@ -96,9 +93,11 @@ class MemberPopupForm extends Component {
       altclass,
       addSelectInput
     });
+    console.log(this.state.altclass);
   }
 
   render() {
+    const { members } = this.props;
     const classOptions = [
       { label: "Select Class", value: "" },
       { label: "Warrior", value: "Warrior" },
@@ -124,18 +123,63 @@ class MemberPopupForm extends Component {
           name="altclass"
           onChange={this.onSelect}
           options={classOptions}
+          image={true}
           info="Select any number of alt classes"
           key={index}
         />
       );
     });
+
+    let memberSelect;
+
+    if (members) {
+      memberSelect = members.map((member, index) => {
+        return (
+          <div className="member-cards__card" key={index}>
+            <h4>{member.username}</h4>
+            <h5>{member.mainclass}</h5>
+            <div
+              className={`member-cards__icon member-cards__icon--${
+                member.mainclass
+              }`}
+            />
+            {member.passwordenabled ? (
+              <TextFieldGroup
+                placeholder="password"
+                name="memberPassword"
+                type="password"
+                value={this.state.memberPassword}
+                onChange={this.onChange}
+                required={member.passwordenabled ? true : false}
+              />
+            ) : null}
+            <input
+              type="button"
+              value="Select"
+              className="button button--green"
+            />
+          </div>
+        );
+      });
+    } else {
+      memberSelect = "test";
+    }
+    console.log(memberSelect);
     return (
-      <div className="member-form">
-        <h4 onClick={this.toggleForm}>
-          Don't see your character? Register one now!
-        </h4>
-        {this.state.toggleForm ? (
-          <form className="member-form__form" onSubmit={this.onSubmit}>
+      <div className="member-popup-section">
+        <h4>Select your in-game character</h4>
+        <div className="member-cards">{memberSelect}</div>
+        <div className="member-form">
+          <h4 onClick={this.toggleForm}>
+            Don't see your character? Click here to register!
+          </h4>
+
+          <form
+            className={classnames("member-form__form", {
+              "js-slide-toggle": this.state.toggleForm
+            })}
+            onSubmit={this.onSubmit}
+          >
             <TextFieldGroup
               placeholder="player handle (unique)"
               name="username"
@@ -187,6 +231,7 @@ class MemberPopupForm extends Component {
                 name="mainclass"
                 onChange={this.onChange}
                 options={classOptions}
+                image={true}
                 info="Select your main class (required)"
                 required={true}
               />
@@ -195,7 +240,8 @@ class MemberPopupForm extends Component {
                 name="altclass"
                 onChange={this.onSelect}
                 options={classOptions}
-                info="Select any number of alt classes(optional)"
+                image={true}
+                info="Select any number of alt classes"
               />
             </div>
             {addonSelect}
@@ -205,7 +251,7 @@ class MemberPopupForm extends Component {
               className="button button--green"
             />
           </form>
-        ) : null}
+        </div>
       </div>
     );
   }

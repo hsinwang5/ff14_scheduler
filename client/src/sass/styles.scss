@@ -1,4 +1,30 @@
-//CSS section==================================================
+//CSS setup==================================================
+
+$tablet: 36rem;
+$desktop: 65rem;
+$highdef: 119rem;
+
+@mixin tablet-screens {
+  @media only screen and (min-width: $tablet) {
+    @content;
+  }
+}
+@mixin laptop-screens {
+  @media only screen and (min-width: $desktop) {
+    @content;
+  }
+}
+@mixin highdef-screens {
+  @media only screen and (min-width: $highdef) {
+    @content;
+  }
+}
+@mixin user-select {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; //@include user-select();
+}
 
 *,
 *:before,
@@ -7,47 +33,50 @@
   margin: 0;
   padding: 0;
 }
-
 html {
   box-sizing: border-box;
+  background: #e6e8f2;
+}
+.App {
+  background: #e6e8f2;
 }
 
 //General=============================================================
 h4 {
   text-align: center;
 }
-
 .label {
   position: relative;
   bottom: 4px;
   margin-bottom: 5px;
 }
-
 .checkbox {
   width: 20px;
   height: 20px;
   margin-left: 5px;
 }
-
 .button {
   width: 120px;
   border-radius: 10px;
   height: 50px;
   outline: none;
 }
-
 .button--green {
-  background-color: green;
+  background-color: #299c11;
+}
+.option {
+  font-size: 1rem;
 }
 
 //Calendar============================================================
 .calendar {
-  background: gray;
-  width: 80vw;
+  background: #de3747;
+  width: 320px;
+  margin: auto;
+  border-radius: 5px;
 }
 .calendar__header {
   text-align: center;
-  border: 1px solid red;
 }
 .calendar__display {
   display: flex;
@@ -55,38 +84,110 @@ h4 {
 }
 .calendar__weeks {
   display: flex;
-  background: lightblue;
+  background: #de3747;
 }
 .calendar__weeks-item {
   width: 14.28%;
   text-align: center;
 }
 .calendar__day {
-  font-size: 40px;
+  font-size: 1.56rem;
   width: 14.28%;
   text-align: center;
-  border: 1px solid red;
-  background-color: orange;
+  background-color: #43a497;
+  border: 1px solid #de3747;
 }
-.calendar__day--dark {
-  background-color: black;
+.calendar__day:hover {
+  background: #fb9ca5;
+  cursor: pointer;
+}
+.calendar__day--empty {
+  background-color: #de3747;
+  cursor: default;
+}
+.calendar__day--empty:hover {
+  background-color: #de3747;
+  cursor: default;
+}
+@include tablet-screens() {
+  .calendar {
+    width: 520px;
+  }
+  .calendar__day {
+    font-size: 2.5rem;
+  }
 }
 
-//inputs =====================================================
+//member selection=================================================
 
-.member-form {
-  color: white;
+.member-popup-section {
   position: absolute;
-  background-color: #1973bd;
-  top: 4%;
+  background-color: #0f1016;
+  color: #99a2b0;
+  top: 2%;
   left: 0;
   right: 0;
   margin: auto;
-  padding: 2% 5% 2% 5%;
+  padding: 1% 5% 2% 5%;
   border-radius: 10px;
-  width: 95%;
+  width: 99%;
+  min-height: 50vh;
 }
-
+.member-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 10px;
+}
+.member-cards__card {
+  position: relative;
+  width: 48%;
+  height: 250px;
+  margin-top: 10px;
+  padding-top: 2px;
+  border-radius: 12px;
+  background-color: #f0f2f5;
+}
+.member-cards__card .form-group {
+  margin: auto;
+  background-color: #81cec3;
+}
+@import "icons";
+.member-cards__card .form-control {
+  height: 40px;
+  font-size: 16px;
+  background-color: #0f1016;
+  border: none;
+  text-align: center;
+  transform: scale(0.7);
+  transition: transform 0.3s ease-out;
+}
+.member-cards__card .form-control:focus {
+  transform: scale(0.9);
+  background-color: #d3d9e3;
+  outline: none;
+  outline-width: 0;
+}
+.member-cards .button {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: #5baf4e;
+}
+.member-form {
+  margin-top: 20px;
+}
+.member-form h4 {
+  cursor: pointer;
+  color: #ffc79f;
+}
+.member-form h4:hover {
+  color: #ffa769;
+}
 .member-form__form {
   overflow: hidden;
   width: 85%;
@@ -94,16 +195,19 @@ h4 {
   text-align: center;
   margin: -5px auto;
   transform: scale(0.95);
-  animation: slide-down 0.25s linear;
+  transition: max-height 0.3s linear;
+  max-height: 0vh;
+  // animation: slide-down 0.25s linear;
 }
-
 .form-group__select {
   width: 75%;
   margin: 11px auto;
 }
-
 .select-group {
   margin-top: 30px;
+}
+.js-slide-toggle {
+  max-height: 1000px;
 }
 
 @keyframes slide-down {

@@ -6,7 +6,11 @@
   padding: 0; }
 
 html {
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  background: #e6e8f2; }
+
+.App {
+  background: #e6e8f2; }
 
 h4 {
   text-align: center; }
@@ -28,15 +32,19 @@ h4 {
   outline: none; }
 
 .button--green {
-  background-color: green; }
+  background-color: #299c11; }
+
+.option {
+  font-size: 1rem; }
 
 .calendar {
-  background: gray;
-  width: 80vw; }
+  background: #de3747;
+  width: 320px;
+  margin: auto;
+  border-radius: 5px; }
 
 .calendar__header {
-  text-align: center;
-  border: 1px solid red; }
+  text-align: center; }
 
 .calendar__display {
   display: flex;
@@ -44,33 +52,153 @@ h4 {
 
 .calendar__weeks {
   display: flex;
-  background: lightblue; }
+  background: #de3747; }
 
 .calendar__weeks-item {
   width: 14.28%;
   text-align: center; }
 
 .calendar__day {
-  font-size: 40px;
+  font-size: 1.56rem;
   width: 14.28%;
   text-align: center;
-  border: 1px solid red;
-  background-color: orange; }
+  background-color: #43a497;
+  border: 1px solid #de3747; }
 
-.calendar__day--dark {
-  background-color: black; }
+.calendar__day:hover {
+  background: #fb9ca5;
+  cursor: pointer; }
 
-.member-form {
-  color: white;
+.calendar__day--empty {
+  background-color: #de3747;
+  cursor: default; }
+
+.calendar__day--empty:hover {
+  background-color: #de3747;
+  cursor: default; }
+
+@media only screen and (min-width: 36rem) {
+  .calendar {
+    width: 520px; }
+  .calendar__day {
+    font-size: 2.5rem; } }
+
+.member-popup-section {
   position: absolute;
-  background-color: #1973bd;
-  top: 4%;
+  background-color: #0f1016;
+  color: #99a2b0;
+  top: 2%;
   left: 0;
   right: 0;
   margin: auto;
-  padding: 2% 5% 2% 5%;
+  padding: 1% 5% 2% 5%;
   border-radius: 10px;
-  width: 95%; }
+  width: 99%;
+  min-height: 50vh; }
+
+.member-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 10px; }
+
+.member-cards__card {
+  position: relative;
+  width: 48%;
+  height: 250px;
+  margin-top: 10px;
+  padding-top: 2px;
+  border-radius: 12px;
+  background-color: #f0f2f5; }
+
+.member-cards__card .form-group {
+  margin: auto;
+  background-color: #81cec3; }
+
+.member-cards__icon {
+  height: 63px;
+  width: 63px;
+  margin: 5px auto; }
+
+.member-cards__icon--Warrior {
+  background: url(../img/Warrior.png); }
+
+.member-cards__icon--Astrologian {
+  background: url(../img/Astrologian.png); }
+
+.member-cards__icon--Bard {
+  background: url(../img/Bard.png); }
+
+.member-cards__icon--Black {
+  background: url(../img/BlackMage.png); }
+
+.member-cards__icon--Dark {
+  background: url(../img/DarkKnight.png); }
+
+.member-cards__icon--Dragoon {
+  background: url(../img/Dragoon.png); }
+
+.member-cards__icon--Machinist {
+  background: url(../img/Machinist.png); }
+
+.member-cards__icon--Monk {
+  background: url(../img/Monk.png); }
+
+.member-cards__icon--Ninja {
+  background: url(../img/Ninja.png); }
+
+.member-cards__icon--Paladin {
+  background: url(../img/Paladin.png); }
+
+.member-cards__icon--Red {
+  background: url(../img/RedMage.png); }
+
+.me Magember-cards__icon--Samurai {
+  background: url(../img/Samurai.png); }
+
+.member-cards__icon--Scholar {
+  background: url(../img/Scholar.png); }
+
+.member-cards__icon--Summoner {
+  background: url(../img/Summoner.png); }
+
+.member-cards__icon--White {
+  background: url(../img/WhiteMage.png); }
+
+.member-cards__card .form-control {
+  height: 40px;
+  font-size: 16px;
+  background-color: #0f1016;
+  border: none;
+  text-align: center;
+  transform: scale(0.7);
+  transition: transform 0.3s ease-out; }
+
+.member-cards__card .form-control:focus {
+  transform: scale(0.9);
+  background-color: #d3d9e3;
+  outline: none;
+  outline-width: 0; }
+
+.member-cards .button {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: #5baf4e; }
+
+.member-form {
+  margin-top: 20px; }
+
+.member-form h4 {
+  cursor: pointer;
+  color: #ffc79f; }
+
+.member-form h4:hover {
+  color: #ffa769; }
 
 .member-form__form {
   overflow: hidden;
@@ -79,7 +207,8 @@ h4 {
   text-align: center;
   margin: -5px auto;
   transform: scale(0.95);
-  animation: slide-down 0.25s linear; }
+  transition: max-height 0.3s linear;
+  max-height: 0vh; }
 
 .form-group__select {
   width: 75%;
@@ -87,6 +216,9 @@ h4 {
 
 .select-group {
   margin-top: 30px; }
+
+.js-slide-toggle {
+  max-height: 1000px; }
 
 @keyframes slide-down {
   0% {

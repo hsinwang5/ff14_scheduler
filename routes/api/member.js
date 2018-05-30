@@ -61,7 +61,7 @@ router.post("/register", (req, res) => {
           .then(savedMember => {
             Group.findOne({ _id: req.body.groupid }).then(group => {
               group.members.push(savedMember);
-              group.save().then(savedgroup => res.json(savedgroup));
+              group.save().then(savedgroup => res.json(savedMember));
             });
           })
           .catch(err => console.log(err));

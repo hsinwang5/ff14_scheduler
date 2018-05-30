@@ -25,18 +25,14 @@ const UserSchema = new mongoose.Schema({
   },
   members: [
     {
-      member: {
-        type: Schema.Types.ObjectId,
-        ref: "member"
-      }
+      type: Schema.Types.ObjectId,
+      ref: "member"
     }
   ],
   events: [
     {
-      event: {
-        type: Schema.Types.ObjectId,
-        ref: "event"
-      }
+      type: Schema.Types.ObjectId,
+      ref: "event"
     }
   ],
   date: {

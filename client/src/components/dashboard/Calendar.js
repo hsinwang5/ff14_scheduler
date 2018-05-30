@@ -13,6 +13,7 @@ class Calendar extends Component {
     };
 
     this.nextMonth = this.nextMonth.bind(this);
+    this.previousMonth = this.previousMonth.bind(this);
     this.sayValue = this.sayValue.bind(this);
   }
 
@@ -33,6 +34,21 @@ class Calendar extends Component {
     if (currentMonth > 11) {
       currentMonth = 0;
       currentYear += 1;
+    }
+    let days = this.props.months[currentMonth].days;
+    this.setState({
+      currentMonth,
+      currentYear,
+      days
+    });
+  }
+
+  previousMonth(e) {
+    let currentMonth = this.state.currentMonth - 1;
+    let currentYear = this.state.currentYear;
+    if (currentMonth < 0) {
+      currentMonth = 11;
+      currentYear -= 1;
     }
     let days = this.props.months[currentMonth].days;
     this.setState({
@@ -71,7 +87,7 @@ class Calendar extends Component {
           onClick={this.sayValue}
           className={classnames({
             calendar__day: dateValue,
-            "calendar__day calendar__day--dark": !dateValue
+            "calendar__day calendar__day--empty": !dateValue
           })}
         >
           {dateValue}
@@ -82,9 +98,14 @@ class Calendar extends Component {
     //className={classnames({ "calendar__weeks-item": true })}
     return (
       <div className="calendar">
-        <div className="calendar__header" onClick={this.nextMonth}>
+        <div className="calendar__header">
+          <i
+            className="fas fa-caret-square-left"
+            onClick={this.previousMonth}
+          />
           {this.props.months[this.state.currentMonth].month}{" "}
           {this.state.currentYear}
+          <i className="fas fa-caret-square-right" onClick={this.nextMonth} />
         </div>
         <div className="calendar__weeks">
           <div className="calendar__weeks-item">Su</div>

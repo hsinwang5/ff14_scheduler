@@ -6,9 +6,10 @@ import * as moment from "moment";
 import jwt_decode from "jwt-decode";
 import Cookies from "universal-cookie";
 import { logoutGroup } from "../../actions/groupActions";
+import isEmpty from "../../utils/is-empty";
 
 import Spinner from "../common/Spinner";
-import NavBar from "../layout/NavBar";
+// import NavBar from "../layout/NavBar";
 import Calendar from "./Calendar";
 import MemberPopupForm from "./MemberPopupForm";
 
@@ -20,7 +21,9 @@ class Dashboard extends Component {
     };
   }
 
-  componentWillMount() {
+  componentWillMount() {}
+
+  componentDidMount() {
     this.props.getGroup(this.props.match.params.id);
     const cookies = new Cookies();
     if (cookies.get("tutorials") === undefined) {
@@ -30,9 +33,6 @@ class Dashboard extends Component {
         expires: new Date("May 28, 2028")
       });
     }
-  }
-
-  componentDidMount() {
     if (localStorage.jwtToken) {
       const decoded = jwt_decode(localStorage.jwtToken);
       setTimeout(() => {
@@ -50,26 +50,28 @@ class Dashboard extends Component {
     // today.utc();
 
     // console.log(today.utc().format());
-    const { group, loading, date, isAuthenticated } = this.props.group;
-    const { showLogin } = this.state;
+    const { group, loading, isAuthenticated } = this.props.group;
     let dashboardContent;
-
-    console.log(group.date);
 
     if (group === null || loading || Object.keys(group).length === 0) {
       dashboardContent = <Spinner />;
     } else {
+      console.log(group);
       dashboardContent = (
         <div>
           <h4>
             Welcome {group.groupname}, today is {today}
           </h4>
-          <div className="dashboard">test</div>
-          <Calendar />
-          {this.props.showMemberForm ? <MemberPopupForm /> : null}
+          <div className="dashboard">
+            <Calendar />
+            {this.props.showMemberForm ? (
+              <MemberPopupForm members={group.members} />
+            ) : null}
+          </div>
         </div>
       );
     }
+    console.log(dashboardContent);
     return <div className="container">{dashboardContent}</div>;
   }
 }
@@ -77,8 +79,8 @@ class Dashboard extends Component {
 const mapStateToProps = state => ({
   group: state.group,
   errors: state.errors,
-  showMemberForm: state.member.showMemberForm,
-  errors: state.errors
+  member: state.member,
+  showMemberForm: state.member.showMemberForm
 });
 
 export default connect(mapStateToProps, { getGroup, logoutGroup })(Dashboard);

@@ -26,7 +26,10 @@ router.post("/test", (req, res) => {
 //@access   Public
 router.get("/:id", (req, res) => {
   Group.findById(req.params.id)
-    .then(group => res.json(group))
+    .populate("members", null)
+    .then(group => {
+      res.json(group);
+    })
     .catch(err =>
       res.status(404).json({ nogroupfound: "No group with that id found" })
     );

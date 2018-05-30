@@ -1,5 +1,5 @@
 import { GET_MEMBER } from "../actions/types";
-import isEmpty from "../utils/is-empty";
+// import isEmpty from "../utils/is-empty";
 
 const initialState = {
   member: {},

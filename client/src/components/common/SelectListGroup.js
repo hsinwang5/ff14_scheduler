@@ -10,10 +10,11 @@ const SelectListGroup = ({
   onChange,
   options,
   required,
-  selected
+  selected,
+  image
 }) => {
   const selectOptions = options.map(option => (
-    <option key={option.label} value={option.value}>
+    <option className="option" key={option.label} value={option.value}>
       {option.label}
     </option>
   ));
@@ -35,6 +36,17 @@ const SelectListGroup = ({
       {error && <div className="invalid-feedback">{error}</div>}
     </div>
   );
+};
+
+SelectListGroup.propTypes = {
+  name: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  value: PropTypes.string,
+  info: PropTypes.string,
+  error: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+  required: PropTypes.bool
 };
 
 export default SelectListGroup;

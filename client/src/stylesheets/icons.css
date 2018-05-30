@@ -1,0 +1,8 @@
+.member-cards__icon {
+  height: 80px;
+  width: 80px;
+  border: 1px solid red;
+  margin: auto; }
+
+.member-cards__icon--Warrior {
+  background: url(../img/Warrior.png); }
