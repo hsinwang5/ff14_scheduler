@@ -6,10 +6,10 @@ To get started:
 - Clone codebase
 - install required packages in root and /client directories
 - you will need to set up the private keys yourself
-- setting up config/keys_dev.js (for deployment to cloud): 
+- setting up config/keys_dev.js: 
 ```
 module.exports = {
-  mongoURI: //database URI,
+  mongoURI: //mongoDB database,
   secretOrKey: //your secret string,
   localKey: //your secret string
 };
