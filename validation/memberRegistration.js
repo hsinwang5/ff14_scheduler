@@ -8,9 +8,9 @@ module.exports = function validateMemberRegistration(data) {
   data.email = !isEmpty(data.email) ? data.email : "";
   data.password = !isEmpty(data.password) ? data.password : "";
 
-  if (!Validator.isLength(data.username, { min: 3, max: 20 })) {
+  if (!Validator.isLength(data.username, { min: 3, max: 14 })) {
     errors.username =
-      "User name should be between 3 and 20 characters. Thanks!";
+      "User name should be between 3 and 14 characters. Thanks!";
   }
   if (
     !Validator.isLength(data.password, { min: 6, max: 20 }) &&

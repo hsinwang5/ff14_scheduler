@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
-import { createMember } from "../../actions/memberActions";
+import { createMember, loginMember } from "../../actions/memberActions";
 import classnames from "classnames";
+import bcrypt from "bcryptjs";
 
+//Initial blocking popup page that forces users to log in as a registered
+//in-game character or create a new character
 class MemberPopupForm extends Component {
   constructor(props) {
     super(props);
@@ -28,6 +31,7 @@ class MemberPopupForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onDeclineEmail = this.onDeclineEmail.bind(this);
     this.onDeclinePassword = this.onDeclinePassword.bind(this);
+    this.onSelectCharacter = this.onSelectCharacter.bind(this);
   }
 
   onChange(e) {
@@ -48,74 +52,99 @@ class MemberPopupForm extends Component {
 
   onSubmit(e) {
     e.preventDefault();
+    //remove non-ff14 class elements from altclass
+    const altclass = this.state.altclass.filter(element => element !== null);
+    let password, email;
+    if (this.state.declinePassword) {
+      password = "";
+    } else {
+      password = this.state.password;
+    }
+    if (this.state.declineEmail) {
+      email = "";
+    } else {
+      email = this.state.password;
+    }
     const memberData = {
       username: this.state.username,
-      email: this.state.email,
-      password: this.state.password,
+      email,
+      password,
       mainclass: this.state.mainclass,
-      altclass: this.state.altclass,
-      groupid: this.props.groupid
+      altclass,
+      groupid: this.props.groupid,
+      memberid: this.props._id
     };
 
     this.props.createMember(memberData);
-    console.log("submitted");
   }
 
   toggleForm(e) {
-    this.setState(prevState => ({
-      toggleForm: !prevState.toggleForm,
-      username: "",
-      email: "",
-      password: "",
-      mainclass: "",
-      declineEmail: false,
-      declinePassword: false,
-      prevValue: ""
-    }));
+    this.setState(prevState => {
+      return {
+        toggleForm: !prevState.toggleForm,
+        username: "",
+        email: "",
+        password: "",
+        prevValue: ""
+      };
+    });
+    if (!this.state.toggleForm) {
+      setTimeout(() => {
+        window.scrollTo({
+          top: 10000,
+          behavior: "smooth"
+        });
+      }, 350);
+    }
   }
 
+  //adds a new html select input option upon selecting an alt class.
+  //replaces duplicate alt classes with null values (to be filtered later)
   onSelect(e) {
     const altclass = this.state.altclass;
     const addSelectInput = this.state.addSelectInput;
-    if (e.target.getAttribute("prevValue")) {
-      altclass.splice(altclass.indexOf(e.target.getAttribute("prevValue")), 1);
-    }
-    e.target.setAttribute("prevValue", e.target.value);
+
+    //puts index of alt class option into html sttribute stored as data
     if (!e.target.getAttribute("selected")) {
       addSelectInput.push("x");
-    } else {
+      e.target.setAttribute("selected", addSelectInput.length - 1);
     }
-    e.target.setAttribute("selected", true);
-    if (altclass.indexOf(e.target.value) === -1) {
-      altclass.push(e.target.value);
+    //If 'selected' attribute is present, replace that value in state.altclass
+    //with the appropriate value if user changes his mind about a prev selection
+    if (e.target.value === "" || altclass.indexOf(e.target.value) !== -1) {
+      altclass[e.target.getAttribute("selected")] = null;
+    } else {
+      altclass[e.target.getAttribute("selected")] = e.target.value;
     }
     this.setState({
       altclass,
       addSelectInput
     });
-    console.log(this.state.altclass);
+    //auto-scroll to the newly created select option
+    setTimeout(() => {
+      window.scrollTo({
+        top: 10000,
+        behavior: "smooth"
+      });
+    }, 100);
+  }
+
+  onSelectCharacter(e) {
+    e.preventDefault();
+
+    const password =
+      this.state.memberPassword === "" ? "password" : this.state.memberPassword;
+
+    const loginData = {
+      memberid: e.target.memberUsername.value,
+      password
+    };
+    this.props.loginMember(loginData);
   }
 
   render() {
-    const { members } = this.props;
-    const classOptions = [
-      { label: "Select Class", value: "" },
-      { label: "Warrior", value: "Warrior" },
-      { label: "Paladin", value: "Paladin" },
-      { label: "Dark Knight", value: "Dark Knight" },
-      { label: "Summoner", value: "Summoner" },
-      { label: "Bard", value: "Bard" },
-      { label: "Dragoon", value: "Dragoon" },
-      { label: "Monk", value: "Monk" },
-      { label: "Ninja", value: "Ninja" },
-      { label: "Machinist", value: "Machinist" },
-      { label: "Samurai", value: "Samurai" },
-      { label: "Red Mage", value: "Red Mage" },
-      { label: "Black Mage", value: "Black Mage" },
-      { label: "White Mage", value: "White Mage" },
-      { label: "Astrologian", value: "Astrologian" },
-      { label: "Scholar", value: "Scholar" }
-    ];
+    const { members, classOptions } = this.props;
+
     const addonSelect = this.state.addSelectInput.map((add, index) => {
       return (
         <SelectListGroup
@@ -143,28 +172,35 @@ class MemberPopupForm extends Component {
                 member.mainclass
               }`}
             />
-            {member.passwordenabled ? (
-              <TextFieldGroup
-                placeholder="password"
-                name="memberPassword"
-                type="password"
-                value={this.state.memberPassword}
-                onChange={this.onChange}
-                required={member.passwordenabled ? true : false}
+            <form onSubmit={this.onSelectCharacter}>
+              {member.passwordenabled ? (
+                <TextFieldGroup
+                  placeholder="password"
+                  name="memberPassword"
+                  type="password"
+                  value={this.state.memberPassword}
+                  onChange={this.onChange}
+                  required={member.passwordenabled ? true : false}
+                />
+              ) : null}
+              <input
+                type="text"
+                name="memberUsername"
+                defaultValue={member._id}
+                className="hidden-username"
               />
-            ) : null}
-            <input
-              type="button"
-              value="Select"
-              className="button button--green"
-            />
+              <input
+                type="submit"
+                value="Select"
+                className="button button--green"
+              />
+            </form>
           </div>
         );
       });
     } else {
       memberSelect = "test";
     }
-    console.log(memberSelect);
     return (
       <div className="member-popup-section">
         <h4>Select your in-game character</h4>
@@ -257,9 +293,32 @@ class MemberPopupForm extends Component {
   }
 }
 
+MemberPopupForm.defaultProps = {
+  classOptions: [
+    { label: "Select Class", value: "" },
+    { label: "Warrior", value: "Warrior" },
+    { label: "Paladin", value: "Paladin" },
+    { label: "Dark Knight", value: "Dark Knight" },
+    { label: "Summoner", value: "Summoner" },
+    { label: "Bard", value: "Bard" },
+    { label: "Dragoon", value: "Dragoon" },
+    { label: "Monk", value: "Monk" },
+    { label: "Ninja", value: "Ninja" },
+    { label: "Machinist", value: "Machinist" },
+    { label: "Samurai", value: "Samurai" },
+    { label: "Red Mage", value: "Red Mage" },
+    { label: "Black Mage", value: "Black Mage" },
+    { label: "White Mage", value: "White Mage" },
+    { label: "Astrologian", value: "Astrologian" },
+    { label: "Scholar", value: "Scholar" }
+  ]
+};
+
 const mapStateToProps = state => ({
   groupid: state.group.group._id,
   showMemberForm: state.member.showMemberForm
 });
 
-export default connect(mapStateToProps, { createMember })(MemberPopupForm);
+export default connect(mapStateToProps, { createMember, loginMember })(
+  MemberPopupForm
+);

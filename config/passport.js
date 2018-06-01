@@ -28,8 +28,12 @@ module.exports = passport => {
 
   // local strategy config (for member access)
   passport.use(
-    new LocalStrategy(function(username, password, done) {
-      Member.findOne({ username: username }, function(err, member) {
+    new LocalStrategy({ usernameField: "memberid" }, function(
+      username,
+      password,
+      done
+    ) {
+      Member.findOne({ _id: username }, function(err, member) {
         if (password === null || password === undefined) {
           return done(null, member);
         }

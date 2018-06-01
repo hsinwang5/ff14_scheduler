@@ -46,6 +46,9 @@ h4 {
 .calendar__header {
   text-align: center; }
 
+.calendar__header .fas {
+  margin: 0 5px; }
+
 .calendar__display {
   display: flex;
   flex-wrap: wrap; }
@@ -218,7 +221,10 @@ h4 {
   margin-top: 30px; }
 
 .js-slide-toggle {
-  max-height: 1000px; }
+  max-height: 2000px; }
+
+.hidden-username {
+  display: none; }
 
 @keyframes slide-down {
   0% {

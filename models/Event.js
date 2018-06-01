@@ -6,31 +6,27 @@ const EventSchema = new Schema({
     type: String,
     required: true
   },
-  date: {
-    type: Date,
+  isWeekly: {
+    type: Boolean,
     required: true
   },
-  maxsignups: {
-    type: Number,
-    default: 50
-  },
-  signups: [
+  datedata: [
     {
-      member: {
-        type: Schema.Types.ObjectId,
-        ref: "member"
-      },
-      availability: {
-        type: Array,
-        required: true
-      },
-      class: {
-        type: String,
-        required: true
-      }
+      type: Schema.Types.ObjectId,
+      ref: "datedata"
+    }
+  ],
+  weekly: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "weekly"
     }
   ],
   symbol: {
+    type: Number,
+    default: 0
+  },
+  finaltime: {
     type: Number,
     default: 0
   }

@@ -12,7 +12,8 @@ const TextFieldGroup = ({
   type,
   onChange,
   disabled,
-  required
+  required,
+  data
 }) => {
   return (
     <div>
@@ -27,6 +28,7 @@ const TextFieldGroup = ({
         onChange={onChange}
         disabled={disabled}
         required={required}
+        data={data}
       />
     </div>
   );

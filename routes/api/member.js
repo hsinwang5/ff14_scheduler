@@ -28,12 +28,12 @@ router.post("/register", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  Member.findOne({ username: req.body.username }).then(member => {
+  Member.findById(req.body.memberid).then(member => {
     if (member) {
       errors.username = "That username is already registered as a member";
       return res.status(400).json(errors);
     } else {
-      //Set passwordenabled flag
+      //Set passwordenabled flag. If user has no password, default is 'password'
       if (req.body.password) {
         passwordenabled = true;
         password = req.body.password;
@@ -74,7 +74,7 @@ router.post("/register", (req, res) => {
 //@desc     logs in group member
 //@acces    Public
 router.post("/login", passport.authenticate("local"), (req, res) => {
-  Member.findOne({ username: req.user.username })
+  Member.findById(req.body.memberid)
     .then(member => {
       res.json(member);
     })

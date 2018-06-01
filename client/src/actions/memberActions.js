@@ -17,3 +17,20 @@ export const createMember = memberData => dispatch => {
       });
     });
 };
+
+export const loginMember = loginData => dispatch => {
+  axios
+    .post("/api/member/login", loginData)
+    .then(res => {
+      dispatch({
+        type: GET_MEMBER,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
