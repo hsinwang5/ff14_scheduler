@@ -6,6 +6,14 @@ const EventSchema = new Schema({
     type: String,
     required: true
   },
+  description: {
+    type: String,
+    default: "A description has not been provided for this event."
+  },
+  eventSize: {
+    type: Number,
+    default: 8
+  },
   isWeekly: {
     type: Boolean,
     required: true
@@ -26,7 +34,11 @@ const EventSchema = new Schema({
     type: Number,
     default: 0
   },
-  finaltime: {
+  starttime: {
+    type: Number,
+    default: 0
+  },
+  endtime: {
     type: Number,
     default: 0
   }

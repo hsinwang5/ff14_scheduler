@@ -4,7 +4,7 @@ import TextFieldGroup from "../common/TextFieldGroup";
 import SelectListGroup from "../common/SelectListGroup";
 import { createMember, loginMember } from "../../actions/memberActions";
 import classnames from "classnames";
-import bcrypt from "bcryptjs";
+// import bcrypt from "bcryptjs";
 
 //Initial blocking popup page that forces users to log in as a registered
 //in-game character or create a new character
@@ -61,7 +61,7 @@ class MemberPopupForm extends Component {
       password = this.state.password;
     }
     if (this.state.declineEmail) {
-      email = "";
+      email = undefined;
     } else {
       email = this.state.password;
     }

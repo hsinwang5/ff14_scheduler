@@ -12,16 +12,25 @@ import Spinner from "../common/Spinner";
 // import NavBar from "../layout/NavBar";
 import Calendar from "./Calendar";
 import MemberPopupForm from "./MemberPopupForm";
+import EventsOverview from "./EventsOverview";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentMember: null
+      currentMember: null,
+      memberUsername: "Player"
     };
   }
 
-  componentWillMount() {}
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.member) {
+      console.log(nextProps);
+      this.setState({
+        memberUsername: nextProps.member.member.username
+      });
+    }
+  }
 
   componentDidMount() {
     this.props.getGroup(this.props.match.params.id);
@@ -60,18 +69,18 @@ class Dashboard extends Component {
       dashboardContent = (
         <div>
           <h4>
-            Welcome {group.groupname}, today is {today}
+            Welcome {this.state.memberUsername}, today is {today}
           </h4>
           <div className="dashboard">
             <Calendar />
             {this.props.showMemberForm ? (
               <MemberPopupForm members={group.members} />
             ) : null}
+            <EventsOverview events={group.events} groupid={group._id} />
           </div>
         </div>
       );
     }
-    console.log(dashboardContent);
     return <div className="container">{dashboardContent}</div>;
   }
 }

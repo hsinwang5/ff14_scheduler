@@ -36,7 +36,10 @@ class NavBar extends Component {
     const { showLogin } = this.state;
     return (
       <div>
-        <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+        <nav
+          style={{ backgroundColor: "#8B6F28" }}
+          className="navbar navbar-expand-sm navbar-dark mb-4"
+        >
           <div className="container">
             <Link
               className="navbar-brand"

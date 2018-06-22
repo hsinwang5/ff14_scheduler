@@ -12,6 +12,7 @@ import { setAdminStatus } from "./actions/groupActions";
 import Landing from "./components/layout/Landing.js";
 import Dashboard from "./components/dashboard/Dashboard";
 import NavBar from "./components/layout/NavBar";
+import Schedule from "./components/schedule/Schedule";
 
 //check for token and set if admin is logged in
 if (localStorage.jwtToken) {
@@ -29,9 +30,10 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
-            <Route path="/dashboard/:id" component={NavBar} />
+            <Route path="/dashboard" component={NavBar} />
             <Route exact path="/" component={Landing} />
-            <Route path="/dashboard/:id" component={Dashboard} />
+            <Route exact path="/dashboard/:id" component={Dashboard} />
+            <Route exact path="/dashboard/:id/:eventid" component={Schedule} />
           </div>
         </Router>
       </Provider>

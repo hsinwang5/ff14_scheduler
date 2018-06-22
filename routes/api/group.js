@@ -27,6 +27,7 @@ router.post("/test", (req, res) => {
 router.get("/:id", (req, res) => {
   Group.findById(req.params.id)
     .populate("members", null)
+    .populate("events", null)
     .then(group => {
       res.json(group);
     })
