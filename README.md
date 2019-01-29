@@ -15,4 +15,4 @@ module.exports = {
 };
 ```
 - You need a mongoDB database to connect to
-- run npm run dev in the root directory to start app
+- type "npm run dev" (minus quotes) in the root directory in console to start app
