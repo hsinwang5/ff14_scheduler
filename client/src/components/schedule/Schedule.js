@@ -39,6 +39,8 @@ class Schedule extends Component {
       (signup, index) => {
         if (signup.availability.indexOf(Number(e.target.dataset.hour)) !== -1) {
           return signup.member;
+        } else {
+          return "no signups";
         }
       }
     );
@@ -72,6 +74,7 @@ class Schedule extends Component {
         const signupData = {};
         signupData.availability = signup.availability;
         signupData.member = signup.member.username;
+        signupData.id = signup._id;
         weekData.signups.push(signupData);
       });
       signups.push(weekData);
@@ -123,6 +126,7 @@ class Schedule extends Component {
   }
 
   onMouseDown(e) {
+    console.log(e.target);
     this.setState({
       mouseDown: true
     });
@@ -133,11 +137,21 @@ class Schedule extends Component {
       fillSquare = true;
       if (fillSquare) {
         e.target.classList.add("js-column-cell-selected");
+        const memberArr = this.state.currentMemberInfo.slice();
+        memberArr[e.target.dataset.weekindex][e.target.dataset.index] = 1;
+        this.setState({
+          currentMemberInfo: memberArr
+        });
       }
     } else {
       fillSquare = false;
       if (fillSquare === false) {
         e.target.classList.remove("js-column-cell-selected");
+        const memberArr = this.state.currentMemberInfo.slice();
+        memberArr[e.target.dataset.weekindex][e.target.dataset.index] = 0;
+        this.setState({
+          currentMemberInfo: memberArr
+        });
       }
     }
   }
@@ -150,10 +164,20 @@ class Schedule extends Component {
       if (e.target.dataset.on === "true") {
         if (fillSquare) {
           e.target.classList.add("js-column-cell-selected");
+          const memberArr = this.state.currentMemberInfo.slice();
+          memberArr[e.target.dataset.weekindex][e.target.dataset.index] = 1;
+          this.setState({
+            currentMemberInfo: memberArr
+          });
         }
       } else {
         if (!fillSquare) {
           e.target.classList.remove("js-column-cell-selected");
+          const memberArr = this.state.currentMemberInfo.slice();
+          memberArr[e.target.dataset.weekindex][e.target.dataset.index] = 0;
+          this.setState({
+            currentMemberInfo: memberArr
+          });
         }
       }
     }
@@ -168,7 +192,7 @@ class Schedule extends Component {
   //RENDER ====================================================================
 
   render() {
-    console.log(this.state.currentMemberInfo);
+    console.log(this.state.signupData);
     const { event, loading } = this.props.event;
     const { hoursArray, hoursValues, styleColor } = this.props;
     const {
@@ -215,6 +239,7 @@ class Schedule extends Component {
             <div
               data-hour={value}
               data-date={week.week}
+              data-weekindex={index1}
               data-on={
                 currentMemberInfo[index1][index2] === 1 ? "true" : "false"
               }
@@ -290,8 +315,6 @@ class Schedule extends Component {
         </div>
       );
     }
-
-    console.log(signupData);
 
     return (
       <div onMouseUp={this.onMouseUp} className="schedule-component">
