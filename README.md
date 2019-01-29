@@ -1,4 +1,4 @@
-# ff14_scheduler
+# scheduler app
 Tool to schedule raids for guilds using react/redux/node
 
 To get started: 
