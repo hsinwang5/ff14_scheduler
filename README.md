@@ -3,10 +3,10 @@ Tool to schedule raids for guilds using react/redux/node
 
 To get started: 
 
-- Clone codebase
-- install required packages in root and /client directories
+- Clone codebase with console command "git clone https://github.com/hsinwang5/ff14_scheduler"
+- install required packages in root and /client directories (note you will also need nodemon installed using "npm i -g nodemon)
 - you will need to set up the private keys yourself
-- place your keys in config/keys_dev.js: 
+- create a .js file and place in config/keys_dev.js with the following information: 
 ```
 module.exports = {
   mongoURI: //mongoDB database,
