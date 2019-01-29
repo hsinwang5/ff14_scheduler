@@ -9,9 +9,9 @@ To get started:
 - create a .js file and place in config/keys_dev.js with the following information: 
 ```
 module.exports = {
-  mongoURI: //mongoDB database,
-  secretOrKey: //your secret string,
-  localKey: //your secret string
+  mongoURI: //mongoDB database info,
+  secretOrKey: //your secret random string,
+  localKey: //your secret random string
 };
 ```
 - You need a mongoDB database to connect to
