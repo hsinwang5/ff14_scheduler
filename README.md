@@ -1,5 +1,5 @@
 # scheduler app
-Tool to schedule raids for guilds using react/redux/node
+Tool to schedule raids for guilds using react/redux/node. Currently under development.
 
 To get started: 
 
